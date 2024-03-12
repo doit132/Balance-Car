@@ -1,4 +1,4 @@
-# 1. 创建工程
+# 1 创建工程
 
 使用 STM32CubeMX 创建一个 STM32F103C8T6 Makefile 工程, 添加一些基本文件, 例如 .clang-format, .gitignore, clang-format.py, build.sh 文件
 
@@ -7,7 +7,7 @@
 - .gitignore 版本管理文件
 - clang-format.py 批量格式化源码脚本文件
 
-# 2. 外设模块驱动编写
+# 2 外设模块驱动编写
 
 ## 2.1 串口
 
@@ -26,12 +26,12 @@ STM32CubeMX 的默认配置, 波特率: 115200, 数据位长度: 8, 无校验
 
 ```c
 /* ANCHOR - gcc printf 重定义 */
-#if 1 /* printf 重定义 */
-#ifdef __GNUC__
-#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
-#else
-#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE* f)
-#endif /* __GNUC__ */
+# if3 /* printf 重定义 */
+# 4 ifdef __GNUC__
+# 5 define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+# 6 else
+# 7 define PUTCHAR_PROTOTYPE int fputc(int ch, FILE* f)
+# 8 endif /* __GNUC__ */
 
 PUTCHAR_PROTOTYPE
 {
@@ -52,7 +52,7 @@ int _write(int file, char* ptr, int len)
     }
     return len;
 }
-#endif /* printf 重定义 */
+# 9 endif /* printf 重定义 */
 ```
 
 注意: 上面的串口 printf 重定义是针对 GCC 编译器的, 并且上述的串口 printf 重定义无法输出浮点数, 为了输出浮点数还需要设置一个链接选项
@@ -64,3 +64,25 @@ LDFLAGS = $(MCU) -specs=nano.specs -T $(LDSCRIPT) $ (LIBDIR) $(LIBS) -Wl,-Map=$(
 --> 在链接选项中增加 -u _printf_float, 添加后编译生成的文件增大 8KB
 LDFLAGS = $(MCU) -specs=nano.specs -u _printf_float -T $(LDSCRIPT) $ (LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 ```
+
+## 2.1 LED
+
+### 2.1.1 LED 原理图
+
+![1710241757491](images/1710241757491.png)
+
+原理图分析:
+
+- 当 PA4 输出低电平的时候, LED 亮
+- 当 PA4 输出高电平的时候, LED 灭
+- 让 PA4 的初始状态为高电平
+
+### 2.1.2 LED IO 资源分配
+
+| IO 口 | 说明 |
+| ----- | ---- |
+| PA4   | LED  |
+
+### 2.1.3 LED GPIO 口配置
+
+推挽输出, 默认高电平 (LED 灭), 速率低

@@ -23,7 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "led.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -96,7 +96,8 @@ int main(void)
     while (1)
     {
         // Test_USART1();
-        
+        Test_LED();
+
         /* USER CODE END WHILE */
 
         /* USER CODE BEGIN 3 */
