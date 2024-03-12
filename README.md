@@ -65,9 +65,9 @@ LDFLAGS = $(MCU) -specs=nano.specs -T $(LDSCRIPT) $ (LIBDIR) $(LIBS) -Wl,-Map=$(
 LDFLAGS = $(MCU) -specs=nano.specs -u _printf_float -T $(LDSCRIPT) $ (LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 ```
 
-## 2.1 LED
+## 2.2 LED
 
-### 2.1.1 LED 原理图
+### 2.2.1 LED 原理图
 
 ![1710241757491](images/1710241757491.png)
 
@@ -77,12 +77,12 @@ LDFLAGS = $(MCU) -specs=nano.specs -u _printf_float -T $(LDSCRIPT) $ (LIBDIR) $(
 - 当 PA4 输出高电平的时候, LED 灭
 - 让 PA4 的初始状态为高电平
 
-### 2.1.2 LED IO 资源分配
+### 2.2.2 LED IO 资源分配
 
 | IO 口 | 说明 |
 | ----- | ---- |
 | PA4   | LED  |
 
-### 2.1.3 LED GPIO 口配置
+### 2.2.3 LED GPIO 口配置
 
 推挽输出, 默认高电平 (LED 灭), 速率低
