@@ -74,16 +74,16 @@
   */
 
 #if !defined(HSE_VALUE)
-#define HSE_VALUE                                                                                                      \
-    8000000U /*!< Default value of the External oscillator in Hz.
+    #define HSE_VALUE                                                                                                  \
+        8000000U /*!< Default value of the External oscillator in Hz.
                                                 This value can be provided and adapted by the user application. */
-#endif       /* HSE_VALUE */
+#endif           /* HSE_VALUE */
 
 #if !defined(HSI_VALUE)
-#define HSI_VALUE                                                                                                      \
-    8000000U /*!< Default value of the Internal oscillator in Hz.
+    #define HSI_VALUE                                                                                                  \
+        8000000U /*!< Default value of the Internal oscillator in Hz.
                                                 This value can be provided and adapted by the user application. */
-#endif       /* HSI_VALUE */
+#endif           /* HSI_VALUE */
 
 /*!< Uncomment the following line if you need to use external SRAM  */
 #if defined(STM32F100xE) || defined(STM32F101xE) || defined(STM32F101xG) || defined(STM32F103xE) || defined(STM32F103xG)
@@ -98,25 +98,25 @@
 /* #define USER_VECT_TAB_ADDRESS */
 
 #if defined(USER_VECT_TAB_ADDRESS)
-/*!< Uncomment the following line if you need to relocate your vector Table
+    /*!< Uncomment the following line if you need to relocate your vector Table
      in Sram else user remap will be done in Flash. */
-/* #define VECT_TAB_SRAM */
-#if defined(VECT_TAB_SRAM)
-#define VECT_TAB_BASE_ADDRESS                                                                                          \
-    SRAM_BASE /*!< Vector Table base address field.
+    /* #define VECT_TAB_SRAM */
+    #if defined(VECT_TAB_SRAM)
+        #define VECT_TAB_BASE_ADDRESS                                                                                  \
+            SRAM_BASE /*!< Vector Table base address field.
                                                      This value must be a multiple of 0x200. */
-#define VECT_TAB_OFFSET                                                                                                \
-    0x00000000U /*!< Vector Table base offset field.
+        #define VECT_TAB_OFFSET                                                                                        \
+            0x00000000U /*!< Vector Table base offset field.
                                                      This value must be a multiple of 0x200. */
-#else
-#define VECT_TAB_BASE_ADDRESS                                                                                          \
-    FLASH_BASE /*!< Vector Table base address field.
+    #else
+        #define VECT_TAB_BASE_ADDRESS                                                                                  \
+            FLASH_BASE /*!< Vector Table base address field.
                                                      This value must be a multiple of 0x200. */
-#define VECT_TAB_OFFSET                                                                                                \
-    0x00000000U /*!< Vector Table base offset field.
+        #define VECT_TAB_OFFSET                                                                                        \
+            0x00000000U /*!< Vector Table base offset field.
                                                      This value must be a multiple of 0x200. */
-#endif          /* VECT_TAB_SRAM */
-#endif          /* USER_VECT_TAB_ADDRESS */
+    #endif              /* VECT_TAB_SRAM */
+#endif                  /* USER_VECT_TAB_ADDRESS */
 
 /******************************************************************************/
 
@@ -157,10 +157,10 @@ const uint8_t APBPrescTable[8U] = {0, 0, 0, 0, 1, 2, 3, 4};
   */
 
 #if defined(STM32F100xE) || defined(STM32F101xE) || defined(STM32F101xG) || defined(STM32F103xE) || defined(STM32F103xG)
-#ifdef DATA_IN_ExtSRAM
+    #ifdef DATA_IN_ExtSRAM
 static void SystemInit_ExtMemCtl(void);
-#endif /* DATA_IN_ExtSRAM */
-#endif /* STM32F100xE || STM32F101xE || STM32F101xG || STM32F103xE || STM32F103xG */
+    #endif /* DATA_IN_ExtSRAM */
+#endif     /* STM32F100xE || STM32F101xE || STM32F101xG || STM32F103xE || STM32F103xG */
 
 /**
   * @}
@@ -181,9 +181,9 @@ static void SystemInit_ExtMemCtl(void);
 void SystemInit(void)
 {
 #if defined(STM32F100xE) || defined(STM32F101xE) || defined(STM32F101xG) || defined(STM32F103xE) || defined(STM32F103xG)
-#ifdef DATA_IN_ExtSRAM
+    #ifdef DATA_IN_ExtSRAM
     SystemInit_ExtMemCtl();
-#endif /* DATA_IN_ExtSRAM */
+    #endif /* DATA_IN_ExtSRAM */
 #endif
 
     /* Configure the Vector Table location -------------------------------------*/
@@ -266,11 +266,11 @@ void SystemCoreClockUpdate(void)
             }
             else
             {
-#if defined(STM32F100xB) || defined(STM32F100xE)
+    #if defined(STM32F100xB) || defined(STM32F100xE)
                 prediv1factor = (RCC->CFGR2 & RCC_CFGR2_PREDIV1) + 1U;
                 /* HSE oscillator clock selected as PREDIV1 clock entry */
                 SystemCoreClock = (HSE_VALUE / prediv1factor) * pllmull;
-#else
+    #else
                 /* HSE selected as PLL clock entry */
                 if ((RCC->CFGR & RCC_CFGR_PLLXTPRE) != (uint32_t)RESET)
                 { /* HSE oscillator clock divided by 2 */
@@ -280,7 +280,7 @@ void SystemCoreClockUpdate(void)
                 {
                     SystemCoreClock = HSE_VALUE * pllmull;
                 }
-#endif
+    #endif
             }
 #else
             pllmull = pllmull >> 18U;
@@ -336,13 +336,13 @@ void SystemCoreClockUpdate(void)
 }
 
 #if defined(STM32F100xE) || defined(STM32F101xE) || defined(STM32F101xG) || defined(STM32F103xE) || defined(STM32F103xG)
-/**
+    /**
   * @brief  Setup the external memory controller. Called in startup_stm32f1xx.s 
   *          before jump to __main
   * @param  None
   * @retval None
   */
-#ifdef DATA_IN_ExtSRAM
+    #ifdef DATA_IN_ExtSRAM
 /**
   * @brief  Setup the external memory controller. 
   *         Called in startup_stm32f1xx_xx.s/.c before jump to main.
@@ -396,8 +396,8 @@ void SystemInit_ExtMemCtl(void)
     FSMC_Bank1->BTCR[4U] = 0x00001091U;
     FSMC_Bank1->BTCR[5U] = 0x00110212U;
 }
-#endif /* DATA_IN_ExtSRAM */
-#endif /* STM32F100xE || STM32F101xE || STM32F101xG || STM32F103xE || STM32F103xG */
+    #endif /* DATA_IN_ExtSRAM */
+#endif     /* STM32F100xE || STM32F101xE || STM32F101xG || STM32F103xE || STM32F103xG */
 
 /**
   * @}
