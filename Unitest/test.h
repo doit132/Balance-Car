@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 #include "test_usart.h"
+#include "test_soft_timer.h"
 
 #ifdef __cplusplus
 }
