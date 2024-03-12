@@ -30,8 +30,6 @@ extern "C" {
 
 /* USER CODE BEGIN Includes */
 
-#include <stdio.h>
-
 /* USER CODE END Includes */
 
 extern UART_HandleTypeDef huart1;
@@ -43,12 +41,6 @@ extern UART_HandleTypeDef huart1;
 void MX_USART1_UART_Init(void);
 
 /* USER CODE BEGIN Prototypes */
-
-/* ANCHOR - 公共函数声明 */
-
-/* NOTE - 测试函数 */
-
-void Test_USART1(void);
 
 /* USER CODE END Prototypes */
 

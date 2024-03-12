@@ -62,6 +62,7 @@ C_SOURCES += $(wildcard Drivers/STM32F1xx_HAL_Driver/Src/*.c)
 C_SOURCES += $(wildcard Core/Src/*.c)
 C_SOURCES += $(wildcard User/*.c)
 C_SOURCES += $(wildcard Hardware/*.c)
+C_SOURCES += $(wildcard Unitest/*.c)
 C_SOURCES := $(sort $(C_SOURCES))
 
 # ASM sources
@@ -130,7 +131,8 @@ C_INCLUDES =  \
 
 # TODO 头文件添加
 C_INCLUDES += -IUser \
--IHardware
+-IHardware \
+-IUnitest
 
 
 # compile gcc flags
