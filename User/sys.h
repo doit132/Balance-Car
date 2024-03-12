@@ -5,6 +5,11 @@
 extern "C" {
 #endif
 
+/* ANCHOR - 头文件包含 */
+
+#include <stdio.h>
+#include <assert.h>
+
 /* ANCHOR - Typedef */
 
 typedef unsigned char  u8;
