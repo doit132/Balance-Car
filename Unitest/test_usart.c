@@ -23,6 +23,7 @@ extern "C" {
 static void Test_USART1_Transmit(void)
 {
     char buf[20] = "hello world\r\n";
+    (void)buf;
 
     while (1)
     {
@@ -45,16 +46,6 @@ static void Test_USART1_Transmit(void)
         printf("10.0 + 30.0 = %.2f\r\n", 10.0 + 30.0);
         HAL_Delay(1000);
     }
-}
-
-void setUp(void)
-{
-    // 在这里配置东西
-}
-
-void tearDown(void)
-{
-    // 在这里清理东西
 }
 
 /**
