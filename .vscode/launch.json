@@ -1,0 +1,26 @@
+{
+    // 使用 IntelliSense 了解相关属性
+    // 悬停以查看现有属性的描述
+    // 欲了解更多信息, 请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Cortex Debug",
+            "type": "cortex-debug",
+            "request": "launch",
+            // TODO : elf 文件看当前工程名称或是看 build 文件夹下的 elf 文件名称
+            "executable": "./build/Template.elf",
+            // "preLaunchTask": "build",
+            "cwd": "${workspaceRoot}",
+            "servertype": "openocd",
+            "device": "STM32F103ZE", // TODO : 当前芯片型号
+            "interface": "swd",
+            "configFiles": [
+                "C:/Users/doit132/scoop/apps/openocd/current/share/openocd/scripts/interface/stlink-v2.cfg", //使用 ST-LINK
+                "C:/Users/doit132/scoop/apps/openocd/current/share/openocd/scripts/target/stm32f1x.cfg", //根据芯片型号更改 stm32f1x.cfg
+            ],
+            // TODO : 
+            "svdFile": "${workspaceRoot}/STM32F103.svd"
+        }
+    ]
+}
