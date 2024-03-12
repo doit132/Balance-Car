@@ -10,6 +10,7 @@ extern "C" {
 
 void LED_Init(void);
 void LED_Flash(u16 time);
+void LED_Toggle(void);
 
 /* NOTE - 测试函数 */
 
