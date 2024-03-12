@@ -257,7 +257,7 @@ IndentGotoLabels: true
 # - None: 不缩进
 # - AfterHash: #不缩进, #后面的指示缩进
 # - BeforeHash: # 跟前缩进
-IndentPPDirectives: None
+IndentPPDirectives: BeforeHash
 # extern "C"缩进, 建议 AfterExternBlock
 IndentExternBlock: AfterExternBlock
 # 模板 require 是否缩进
