@@ -53,41 +53,26 @@ void LED_Toggle(void)
 /**
  * *****************************************************************************
  * @brief LED 闪烁
- * @param [in] time 闪烁间隔时间
+ * @param [in] time 闪烁间隔时间 单位: ms
+ * @param [in] count 闪烁次数
  * @note - time 最大 3s, 再长就没有什么意义
  * *****************************************************************************
  */
-void LED_Flash(u16 time)
+void LED_Flash(u16 time, u8 count)
 {
     /* 1. 参数检查 ------------------------------------------------------------------ */
     assert(time > 0 && time < 3000);
+    assert(count > 0);
 
     /* 2. 功能实现 ------------------------------------------------------------------ */
-    HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-    HAL_Delay(time);
-}
-
-/* ANCHOR - LED 测试代码 */
-
-static void Test_Led_Flash(void)
-{
-    LED_Init();
-    while (1)
+    while (count)
     {
-        /* 1. 测试 LED 闪烁 ------------------------------------------------------------- */
-        LED_Flash(1000);
-
-        /* 2. 测试 led 亮 -------------------------------------------------------------- */
-        // LED_On();
-
-        /* 3. 测试 led 灭 -------------------------------------------------------------- */
-        // LED_Off();
+        HAL_Delay(time);
+        LED_Toggle();
+        HAL_Delay(time);
+        LED_Toggle();
+        count--;
     }
-}
-
-void Test_LED(void)
-{
-    Test_Led_Flash();
 }
 
 #ifdef __cplusplus

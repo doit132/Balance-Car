@@ -9,12 +9,8 @@ extern "C" {
 /* ANCHOR - 公共函数定义 */
 
 void LED_Init(void);
-void LED_Flash(u16 time);
+void LED_Flash(u16 time, u8 count);
 void LED_Toggle(void);
-
-/* NOTE - 测试函数 */
-
-void Test_LED(void);
 
 #ifdef __cplusplus
 }
