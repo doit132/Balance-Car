@@ -9,6 +9,7 @@ extern "C" {
 #include "test_soft_timer.h"
 #include "test_key.h"
 #include "test_hcsr04.h"
+#include "test_oled.h"
 
 #ifdef __cplusplus
 }

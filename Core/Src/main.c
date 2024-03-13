@@ -109,7 +109,8 @@ int main(void)
         // Test_LED();
         // Test_SoftTimer();
         // Test_Key();
-        Test_HCSR04();
+        // Test_HCSR04();
+        Test_OLED();
 
         /* USER CODE END WHILE */
 
