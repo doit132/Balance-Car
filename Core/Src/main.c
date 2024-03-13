@@ -23,7 +23,14 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "led.h"
+
+#include "test.h"
+
+/* 外设头文件 */
+
+#include "bsp.h"
+#include "soft_timer.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -88,7 +95,8 @@ int main(void)
     MX_GPIO_Init();
     MX_USART1_UART_Init();
     /* USER CODE BEGIN 2 */
-
+    SoftTimer_Init(); /* 需要在外设初始化之前运行, 因为有的外设初始化需要软件定时器 */
+    BSP_Init();
     /* USER CODE END 2 */
 
     /* Infinite loop */
@@ -96,7 +104,9 @@ int main(void)
     while (1)
     {
         // Test_USART1();
-        Test_LED();
+        // Test_LED();
+        // Test_SoftTimer();
+        Test_Key();
 
         /* USER CODE END WHILE */
 
