@@ -1,5 +1,5 @@
-#ifndef BSP_H
-#define BSP_H
+#ifndef TEST_HCSR04_H
+#define TEST_HCSR04_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -9,9 +9,10 @@ extern "C" {
 
 /* ANCHOR - 公共函数声明 */
 
-void BSP_Init(void);
+void Test_HCSR04(void);
+
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* BSP_H */
+#endif /* TEST_HCSR04_H */

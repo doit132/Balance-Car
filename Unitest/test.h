@@ -8,6 +8,7 @@ extern "C" {
 #include "test_usart.h"
 #include "test_soft_timer.h"
 #include "test_key.h"
+#include "test_hcsr04.h"
 
 #ifdef __cplusplus
 }

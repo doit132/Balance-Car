@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -94,6 +95,7 @@ int main(void)
     /* Initialize all configured peripherals */
     MX_GPIO_Init();
     MX_USART1_UART_Init();
+    MX_TIM3_Init();
     /* USER CODE BEGIN 2 */
     SoftTimer_Init(); /* 需要在外设初始化之前运行, 因为有的外设初始化需要软件定时器 */
     BSP_Init();
@@ -106,7 +108,8 @@ int main(void)
         // Test_USART1();
         // Test_LED();
         // Test_SoftTimer();
-        Test_Key();
+        // Test_Key();
+        Test_HCSR04();
 
         /* USER CODE END WHILE */
 
