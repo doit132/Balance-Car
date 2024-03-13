@@ -42,7 +42,7 @@ typedef struct
 void SoftTimer_Init(void);
 u8   SoftTimer_Check(u8 id);
 void SoftTimer_Start(u8 id, u32 period, soft_timer_mode_t mode, const char* name);
-
+void SoftTimer_Stop(u8 id);
 /* NOTE - 中断处理函数 */
 
 void SysTick_ISR(void);

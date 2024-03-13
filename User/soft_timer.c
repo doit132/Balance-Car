@@ -74,6 +74,26 @@ void SoftTimer_Start(u8 id, u32 period, soft_timer_mode_t mode, const char* name
 
 /**
  * *****************************************************************************
+ * @brief 停止软件定时器
+ * @param [in] id 要停止的软件定时器序号 0~TMR_COUNT - 1
+ * *****************************************************************************
+ */
+void SoftTimer_Stop(u8 id)
+{
+    /* 防御式编程, 检测参数合法性 */
+    assert(id < TMR_COUNT);
+
+    __disable_irq();                             /* 关中断 */
+    _soft_timer[id].Count = 0;                   /* 实时计数器初值 */
+    _soft_timer[id].PreLoad = 0;                 /* 计数器自动重装值, 仅自动模式起作用 */
+    _soft_timer[id].Flag = 0;                    /* 定时时间到标志 */
+    _soft_timer[id].Mode = SOFT_TIMER_MODE_ONCE; /* 工作模式 */
+    strcpy((char*)_soft_timer[id].Name, "soft_timer");
+    __enable_irq(); /* 开中断 */
+}
+
+/**
+ * *****************************************************************************
  * @brief 检测软件定时器是否定时完成
  * @param [in] id 要检测的软件定时器序号 0~TMR_COUNT - 1
  * @return 
@@ -84,10 +104,11 @@ u8 SoftTimer_Check(u8 id)
     /* 防御式编程, 检测参数合法性 */
     assert(id < TMR_COUNT);
 
-    /*判断时间到标志值 Flag 是否置位, 如果置位表示时间已经到, 如果为 0, 表示时间还没有到*/
+    /* 判断时间到标志值 Flag 是否置位, 如果置位表示时间已经到, 如果为 0, 表示时间还没有到 */
     if (_soft_timer[id].Flag == 1)
     {
         _soft_timer[id].Flag = 0;
+        _soft_timer[id].Count = 0;
         if (_soft_timer[id].Mode == SOFT_TIMER_MODE_PERIODIC)
         {
             _soft_timer[id].Count = _soft_timer[id].PreLoad; /* 定时时间到, 重新装载计数器初值 */
