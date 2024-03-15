@@ -10,6 +10,7 @@ extern "C" {
 #include "main.h"
 
 /* ANCHOR - 宏定义 */
+
 /* OLED IO 口操作宏定义 */
 /* RST 引脚置位和复位 */
 #define OLED_RST_Clr() HAL_GPIO_WritePin(OLED_RES_GPIO_Port, OLED_RES_Pin, GPIO_PIN_RESET); //RST
@@ -33,6 +34,7 @@ extern "C" {
 #define CNSizeHeight 16
 
 /* ANCHOR - 公共函数声明 */
+
 /* OLED 控制用函数 */
 void OLED_WR_Byte(u8 dat, u8 cmd);
 void OLED_Display_On(void);
