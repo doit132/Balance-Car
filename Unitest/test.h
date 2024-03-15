@@ -10,6 +10,7 @@ extern "C" {
 #include "test_key.h"
 #include "test_hcsr04.h"
 #include "test_oled.h"
+#include "test_mpu6050.h"
 
 #ifdef __cplusplus
 }
