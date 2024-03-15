@@ -10,7 +10,7 @@ extern "C" {
 
 /* ANCHOR - 全局变量定义 */
 
-MPU6050_Data_t MPU6050_Data;
+extern MPU6050_Data_t MPU6050_Data;
 
 /* ANCHOR - 公共函数定义 */
 

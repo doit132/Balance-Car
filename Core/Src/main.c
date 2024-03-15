@@ -18,6 +18,8 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "adc.h"
+#include "i2c.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -26,11 +28,15 @@
 /* USER CODE BEGIN Includes */
 
 #include "test.h"
+#include "show.h"
+#include "encoder.h"
 
 /* 外设头文件 */
 
 #include "bsp.h"
 #include "soft_timer.h"
+
+#include "pid.h"
 
 /* USER CODE END Includes */
 
@@ -52,6 +58,21 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+
+/* ANCHOR - 公共全局变量 */
+
+float             GyroX, GyroY, GyroZ; /* 陀螺仪数据 */
+float             AccX, AccY, AccZ;    /* 加速度计数据 */
+float             Pitch, Yaw, Roll;    /* 欧拉角 */
+u8                WayAngle;            /* 获得欧拉角的方式: 1: DMP 2: 卡尔曼滤波 3: 互补滤波 */
+PID_HandleTypeDef HPid;                /* PID 句柄 */
+u8                FlagStop;            /* 小车停止标志位 */
+float             Voltage;             /* 电池电压 */
+u8                FlagAvoid;           /* 小车避障模式标志位 */
+u8                FlagFollow;          /* 小车跟随模式标志位 */
+Hcsr04Info_t      Hcsr04Info;          /* 超声波传感器结构体, 内部有测量距离 */
+Encoder_Data_t    Encoder_Data;        /* 编码器数据 */
+Motor_Data_t      Motor_Data;          /* 电机数据 */
 
 /* USER CODE END PV */
 
@@ -96,6 +117,11 @@ int main(void)
     MX_GPIO_Init();
     MX_USART1_UART_Init();
     MX_TIM3_Init();
+    MX_I2C1_Init();
+    MX_ADC1_Init();
+    MX_TIM2_Init();
+    MX_TIM4_Init();
+    MX_TIM1_Init();
     /* USER CODE BEGIN 2 */
     SoftTimer_Init(); /* 需要在外设初始化之前运行, 因为有的外设初始化需要软件定时器 */
     BSP_Init();
@@ -110,7 +136,16 @@ int main(void)
         // Test_SoftTimer();
         // Test_Key();
         // Test_HCSR04();
-        Test_OLED();
+        // Test_OLED();
+        // Test_MPU6050();
+        // Test_ADC();
+        // while (1)
+        // {
+        //     Voltage = ADC_Get_Battery_Volt();
+        //     OLED_Show();
+        //     HAL_Delay(100);
+        // }
+        // Test_Motor();
 
         /* USER CODE END WHILE */
 
@@ -125,8 +160,9 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
-    RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-    RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+    RCC_OscInitTypeDef       RCC_OscInitStruct = {0};
+    RCC_ClkInitTypeDef       RCC_ClkInitStruct = {0};
+    RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
     /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
@@ -152,6 +188,12 @@ void SystemClock_Config(void)
     RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
     if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+    {
+        Error_Handler();
+    }
+    PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC;
+    PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV6;
+    if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
     {
         Error_Handler();
     }

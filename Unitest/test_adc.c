@@ -11,6 +11,7 @@ extern "C" {
 
 void Test_ADC_Voltage(void)
 {
+    extern float Voltage;
     while (1)
     {
         Voltage = ADC_Get_Battery_Volt();

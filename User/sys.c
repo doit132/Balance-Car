@@ -20,6 +20,23 @@ int _fstat(int fd, struct stat* st);
 
 /* ANCHOR - 公共函数定义 */
 
+/**
+ * *****************************************************************************
+ * @brief 绝对值函数
+ * @param [in] a 需要计算绝对值的数
+ * @return 无符号整型
+ * *****************************************************************************
+ */
+int SYS_Abs(int a)
+{
+    int temp;
+    if (a < 0)
+        temp = -a;
+    else
+        temp = a;
+    return temp;
+}
+
 /* NOTE - 为了消除编译警告 */
 
 __attribute__((weak)) int _isatty(int fd)

@@ -5,7 +5,7 @@ extern "C" {
 /* ANCHOR - 头文件包含 */
 
 #include "hcsr04.h"
-#include "soft_timer.h"
+#include "delay.h"
 
 /* ANCHOR - 全局变量定义 */
 
@@ -16,7 +16,7 @@ extern Hcsr04Info_t Hcsr04Info;
 void HCSR04_Start(void)
 {
     HAL_GPIO_WritePin(TRIG_GPIO_Port, TRIG_Pin, GPIO_PIN_SET);
-    HAL_Delay(1); /* 阻塞延时, 不能在中断中使用, 因为 Systick 的中断优先级最低 */
+    Systick_Delay_Us(20); /* 阻塞延时, 不能在中断中使用, 因为 Systick 的中断优先级最低 */
     HAL_GPIO_WritePin(TRIG_GPIO_Port, TRIG_Pin, GPIO_PIN_RESET);
 }
 

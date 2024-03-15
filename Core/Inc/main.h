@@ -36,6 +36,7 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
+/* ANCHOR - 全局变量声明 */
 
 /* USER CODE END ET */
 
@@ -57,22 +58,42 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define LED_Pin            GPIO_PIN_4
-#define LED_GPIO_Port      GPIOA
-#define KEY_Pin            GPIO_PIN_5
-#define KEY_GPIO_Port      GPIOA
-#define ECHO_Pin           GPIO_PIN_0
-#define ECHO_GPIO_Port     GPIOB
-#define TRIG_Pin           GPIO_PIN_1
-#define TRIG_GPIO_Port     GPIOB
-#define OLED_DC_Pin        GPIO_PIN_15
-#define OLED_DC_GPIO_Port  GPIOA
-#define OLED_RES_Pin       GPIO_PIN_3
-#define OLED_RES_GPIO_Port GPIOB
-#define OLED_SDA_Pin       GPIO_PIN_4
-#define OLED_SDA_GPIO_Port GPIOB
-#define OLED_SCL_Pin       GPIO_PIN_5
-#define OLED_SCL_GPIO_Port GPIOB
+#define LED_Pin               GPIO_PIN_4
+#define LED_GPIO_Port         GPIOA
+#define KEY_Pin               GPIO_PIN_5
+#define KEY_GPIO_Port         GPIOA
+#define VOL_Pin               GPIO_PIN_6
+#define VOL_GPIO_Port         GPIOA
+#define ECHO_Pin              GPIO_PIN_0
+#define ECHO_GPIO_Port        GPIOB
+#define TRIG_Pin              GPIO_PIN_1
+#define TRIG_GPIO_Port        GPIOB
+#define BIN2_Pin              GPIO_PIN_12
+#define BIN2_GPIO_Port        GPIOB
+#define BIN1_Pin              GPIO_PIN_13
+#define BIN1_GPIO_Port        GPIOB
+#define AIN1_Pin              GPIO_PIN_14
+#define AIN1_GPIO_Port        GPIOB
+#define AIN2_Pin              GPIO_PIN_15
+#define AIN2_GPIO_Port        GPIOB
+#define PWM_Right_Pin         GPIO_PIN_8
+#define PWM_Right_GPIO_Port   GPIOA
+#define PWM_Left_Pin          GPIO_PIN_11
+#define PWM_Left_GPIO_Port    GPIOA
+#define MPU6050_INT_Pin       GPIO_PIN_12
+#define MPU6050_INT_GPIO_Port GPIOA
+#define OLED_DC_Pin           GPIO_PIN_15
+#define OLED_DC_GPIO_Port     GPIOA
+#define OLED_RES_Pin          GPIO_PIN_3
+#define OLED_RES_GPIO_Port    GPIOB
+#define OLED_SDA_Pin          GPIO_PIN_4
+#define OLED_SDA_GPIO_Port    GPIOB
+#define OLED_SCL_Pin          GPIO_PIN_5
+#define OLED_SCL_GPIO_Port    GPIOB
+#define MPU6050_SCL_Pin       GPIO_PIN_8
+#define MPU6050_SCL_GPIO_Port GPIOB
+#define MPU6050_SDA_Pin       GPIO_PIN_9
+#define MPU6050_SDA_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

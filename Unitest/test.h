@@ -12,6 +12,8 @@ extern "C" {
 #include "test_oled.h"
 #include "test_mpu6050.h"
 #include "test_adc.h"
+#include "test_encoder.h"
+#include "test_motor.h"
 
 #ifdef __cplusplus
 }

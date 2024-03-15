@@ -10,7 +10,7 @@ extern "C" {
 
 /* ANCHOR - 全局变量定义 */
 
-Hcsr04Info_t Hcsr04Info;
+extern Hcsr04Info_t Hcsr04Info;
 
 /* ANCHOR - 公共函数定义 */
 

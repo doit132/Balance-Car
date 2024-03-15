@@ -201,7 +201,6 @@ MPU6050 与 MCU 是通过 IIC 进行通信, 可以通过 GPIO 模拟 IIC, 也可
 | PA12     | MPU6050 的 INT 中断引脚 |
 | PB8, PB9 | IIC 的 SCL  和 SDA     |
 
-
 ## 2.7 ADC 测量模拟电压
 
 在 STM32F103C8 有 10 个外部通道、12 位 ADC, 输入范围为 0V -3.3V, 它将 0 到 3.3 伏之间的输入电压映射为 0 到 4095 之间 ($2^{12}$) 的整数值
@@ -209,10 +208,12 @@ MPU6050 与 MCU 是通过 IIC 进行通信, 可以通过 GPIO 模拟 IIC, 也可
 ![1710506285931](images/1710506285931.png)
 
 通过电阻将 VIN 分压, VOUT 进入 ADC 采集通道
-$V_{OUT}=\frac{V_{IN}*1}{11} \to V_{IN}=11*V_{OUT}$ , $V_{OUT}=\frac{ADC_{Value}}{4096}*3.3$  
+$V_{OUT}=\frac{V_{IN}*1}{11} \to V_{IN}=11*V_{OUT}$ , $V_{OUT}=\frac{ADC_{Value}}{4096}*3.3$
 
 $V_{IN}=\frac{11*ADC_{Value}*3.3}{4096}$ (单位: V, 浮点数)
 
 ### 2.7.1 IO 资源分配
 
 PA6 配置为 ADC1_CH6
+
+## 2.8 编码器
