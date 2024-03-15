@@ -48,12 +48,21 @@
         "*.bak": "Log",
         "*.cmake": "cmake",
         "*.ld": "linkerscript",
+        "*.hex": "code-text-binary",
+        "*.h": "c",
+        ".inputrc": "ini",
+        "*.fish": "fish",
+        "*.nu": "nushell",
+        "*.kbd": "lisp",
+        "*.ini": "ini",
+        "*.code-snippets": "json",
         "usart.h": "c",
         "sys.h": "c",
         "main.h": "c",
         "stm32f4xx.h": "c",
         "stm32f4xx_gpio.h": "c",
-        "stm32f4xx_conf.h": "c"
+        "stm32f4xx_conf.h": "c",
+        "compare": "c"
     },
     "files.exclude": {
         // "**/.cache": true
