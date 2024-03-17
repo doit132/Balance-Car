@@ -7,6 +7,7 @@ extern "C" {
 #include "test_mpu6050.h"
 #include "mpu6050.h"
 #include "delay.h"
+#include "bsp.h"
 
 /* ANCHOR - 全局变量定义 */
 
@@ -39,8 +40,7 @@ void Test_MPU6050_Custom(void)
 
 void Test_MPU6050_DMP(void)
 {
-    int   ret = 0;
-    float pitch, roll, yaw;
+    int ret = 0;
     do
     {
         ret = MPU6050_DMP_Init();
@@ -50,11 +50,13 @@ void Test_MPU6050_DMP(void)
 
     while (1)
     {
-        if (MPU6050_DMP_Get_Data(&pitch, &roll, &yaw) == 0)
+        if (MPU6050_DMP_Get_Data(&g_pitch, &g_roll, &g_yaw) == 0)
         {
-            printf("pitch = %f, roll = %f, yaw = %f\r\n", pitch, roll, yaw);
+            printf("pitch = %f, roll = %f, yaw = %f\r\n", g_pitch, g_roll, g_yaw);
+            printf("gyro_x = %f, gyro_y = %f, gyro_z = %f\r\n", g_gyro_x, g_gyro_y, g_gyro_z);
+            printf("acc_x = %f, acc_y = %f, acc_z = %f\r\n", g_acc_x, g_acc_y, g_acc_z);
         }
-        Systick_Delay_Ms(10);
+        Systick_Delay_Ms(100);
     }
 }
 

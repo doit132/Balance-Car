@@ -13,6 +13,10 @@ extern "C" {
 
 /* ANCHOR - 全局变量定义 */
 
+float g_gyro_x, g_gyro_y, g_gyro_z; /* 陀螺仪角速度 */
+float g_acc_x, g_acc_y, g_acc_z;    /* 加速度计加速度 */
+float g_pitch, g_yaw, g_roll;       /* 欧拉角 */
+
 /* ANCHOR - 私有变量定义 */
 
 // clang-format off
@@ -629,8 +633,8 @@ int MPU6050_DMP_Init(void)
 int MPU6050_DMP_Get_Data(float* pitch, float* roll, float* yaw)
 {
     float         q0 = 1.0f, q1 = 0.0f, q2 = 0.0f, q3 = 0.0f;
-    short         gyro[3];
-    short         accel[3];
+    short         gyro[3];  /* 陀螺仪角速度, 16 位 */
+    short         accel[3]; /* 加速度计加速度, 16 位 */
     long          quat[4];
     unsigned long timestamp;
     short         sensors;
@@ -656,6 +660,15 @@ int MPU6050_DMP_Get_Data(float* pitch, float* roll, float* yaw)
         // *roll = atan2(2 * q2 * q3 + 2 * q0 * q1, -2 * q1 * q1 - 2 * q2 * q2 + 1) * 57.3;     // roll
         // *yaw = atan2(2 * (q0 * q3 + q1 * q2), q0 * q0 + q1 * q1 - q2 * q2 - q3 * q3) * 57.3; // yaw
 
+        /* 原始数据与实际数据的换算关系 */
+        g_gyro_x = gyro[0] / 16.4;
+        g_gyro_y = gyro[1] / 16.4;
+        g_gyro_z = gyro[2] / 16.4;
+        g_acc_x = accel[0] / 16384.0;
+        g_acc_y = accel[1] / 16384.0;
+        g_acc_z = accel[2] / 16384.0;
+
+        /* 使用四元数计算 pitch roll yaw */
         *roll = asin(-2 * q1 * q3 + 2 * q0 * q2) * 57.3;                                     // pitch
         *pitch = atan2(2 * q2 * q3 + 2 * q0 * q1, -2 * q1 * q1 - 2 * q2 * q2 + 1) * 57.3;    // roll
         *yaw = atan2(2 * (q0 * q3 + q1 * q2), q0 * q0 + q1 * q1 - q2 * q2 - q3 * q3) * 57.3; // yaw

@@ -10,15 +10,16 @@ extern "C" {
 
 void BSP_Init(void)
 {
-    extern Hcsr04Info_t   Hcsr04Info;
-    extern Encoder_Data_t Encoder_Data;
-    extern Motor_Data_t   Motor_Data;
+    extern Hcsr04Info_t   g_hcsr04_info;
+    extern Encoder_Data_t g_encoder_data;
+    extern Motor_Data_t   g_motor_data;
     Systick_Delay_Init();
-    LED_Init();                                      /* LED 模块初始化 */
-    KEY_Init();                                      /* 按键模块初始化 */
-    Motor_Init(&Motor_Data);                         /* 电机模块初始化 */
-    HCSR04_Init(&htim3, TIM_CHANNEL_3, &Hcsr04Info); /* 超声波模块初始化 */
-    Encoder_Init(&Encoder_Data);
+    LED_Init();                                         /* LED 模块初始化 */
+    KEY_Init();                                         /* 按键模块初始化 */
+    Motor_Init(&g_motor_data);                          /* 电机模块初始化 */
+    HCSR04_Init(&htim3, TIM_CHANNEL_3, &g_hcsr04_info); /* 超声波模块初始化 */
+    Encoder_Init(&g_encoder_data);
+    MPU6050_DMP_Init();
     OLED_Init(); /* OLED 模块初始化 */
 }
 

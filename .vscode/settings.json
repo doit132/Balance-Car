@@ -62,7 +62,9 @@
         "stm32f4xx.h": "c",
         "stm32f4xx_gpio.h": "c",
         "stm32f4xx_conf.h": "c",
-        "compare": "c"
+        "compare": "c",
+        "limits": "c",
+        "cstdlib": "c"
     },
     "files.exclude": {
         // "**/.cache": true

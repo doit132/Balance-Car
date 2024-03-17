@@ -11,11 +11,11 @@ extern "C" {
 
 void Test_ADC_Voltage(void)
 {
-    extern float Voltage;
+    extern float g_voltage;
     while (1)
     {
-        Voltage = ADC_Get_Battery_Volt();
-        printf("voltage = %f\r\n", Voltage);
+        g_voltage = ADC_Get_Battery_Volt();
+        printf("voltage = %f\r\n", g_voltage);
         HAL_Delay(100);
     }
 }

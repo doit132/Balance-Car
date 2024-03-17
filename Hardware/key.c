@@ -231,7 +231,7 @@ void KEY_ReadStateMachine(void)
  */
 void KEY_Init(void)
 {
-    SoftTimer_Start(1, 20, SOFT_TIMER_MODE_PERIODIC, "KEY");
+    // SoftTimer_Start(1, 20, SOFT_TIMER_MODE_PERIODIC, "KEY");
 }
 
 /**
@@ -244,9 +244,8 @@ void KEY_Init(void)
  */
 u8 KEY_Scan_WT(void)
 {
-    u8 key_num = 0;
-
-    return key_num;
+    KEY_ReadStateMachine();
+    return KeyCfg.KEY_Event;
 }
 
 /**

@@ -35,8 +35,8 @@ void Motor_Init(Motor_Data_t* pData)
     __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, 0);
     __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_4, 0);
 
-    pData->Velocity_Left = 0;
-    pData->Velocity_Right = 0;
+    pData->velocity_left = 0;
+    pData->velocity_right = 0;
 }
 
 /**
@@ -77,41 +77,26 @@ static void Motor_Set_Direction(u8 motor, u8 direction)
 /**
  * *****************************************************************************
  * @brief 停止电机转动
- * @param [in] motor 要停止的电机
- * @note - motor = 1 表示左电机, motor = 2 表示右电机, motor = 3 表示全部
  * *****************************************************************************
  */
-void Motor_TurnOff(u8 motor)
+void Motor_TurnOff(void)
 {
-    /* ANCHOR - 防御式编程, 参数校验 */
-    assert(motor >= 1 && motor <= 3);
-
-    if (motor == 1 || motor == 3)
-    {
-        HAL_GPIO_WritePin(AIN1_GPIO_Port, AIN1_Pin, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(AIN2_GPIO_Port, AIN2_Pin, GPIO_PIN_SET);
-    }
-    if (motor == 2 || motor == 3)
-    {
-        HAL_GPIO_WritePin(BIN1_GPIO_Port, BIN1_Pin, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(BIN2_GPIO_Port, BIN2_Pin, GPIO_PIN_SET);
-    }
+    HAL_GPIO_WritePin(AIN1_GPIO_Port, AIN1_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(AIN2_GPIO_Port, AIN2_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(BIN1_GPIO_Port, BIN1_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(BIN2_GPIO_Port, BIN2_Pin, GPIO_PIN_RESET);
 }
 
 /**
  * *****************************************************************************
  * @brief 给电机设置 PWM 占空比, 如果是负值后退, 如果是正值, 前进
- * @param [in] motor_left -1000 - +1000, 0 表示停止, 负数表示后退, 正数表示前进
- * @param [in] motor_right -1000 - +1000, 0 表示停止, 负数表示后退, 正数表示前进
+ * @param [in] motor_left 0 表示停止, 负数表示后退, 正数表示前进
+ * @param [in] motor_right 0 表示停止, 负数表示后退, 正数表示前进
  * @note - 超声波测距模块面向自己, 以此参考系判断电机左右
  * *****************************************************************************
  */
 void Motor_Set_Pwm(int motor_left, int motor_right)
 {
-    /* 防御式编程, 参数校验 */
-    assert(motor_left >= -1000 && motor_left <= 1000);
-    assert(motor_right >= -1000 && motor_right <= 1000);
-
     if (motor_left > 0)
         Motor_Set_Direction(LEFT_MOTOR, FORWARD);
     else
@@ -141,13 +126,13 @@ void Motor_Get_Velocity_From_Encoder(Motor_Data_t* pMotorData, Encoder_Data_t* p
 
     /* 计算轮子转速 (n/s) */
     Rotation_Speed_L =
-        pEncoderData->encoder_count_l * CONTROL_FREQUENCY / ENCODER_MULTIPLES / REDUCTION_RATIO / ENCODER_PRECISION;
+        pEncoderData->count_l * CONTROL_FREQUENCY / ENCODER_MULTIPLES / REDUCTION_RATIO / ENCODER_PRECISION;
     Rotation_Speed_R =
-        pEncoderData->encoder_count_r * CONTROL_FREQUENCY / ENCODER_MULTIPLES / REDUCTION_RATIO / ENCODER_PRECISION;
+        pEncoderData->count_r * CONTROL_FREQUENCY / ENCODER_MULTIPLES / REDUCTION_RATIO / ENCODER_PRECISION;
 
     /* 计算轮子速度 (mm/s): 线速度 (m/s) = 转速 (n/s) * 周长 (mm) */
-    pMotorData->Velocity_Left = Rotation_Speed_L * PI * DIAMETER_67;
-    pMotorData->Velocity_Right = Rotation_Speed_R * PI * DIAMETER_67;
+    pMotorData->velocity_left = Rotation_Speed_L * PI * DIAMETER_67;
+    pMotorData->velocity_right = Rotation_Speed_R * PI * DIAMETER_67;
 }
 
 #ifdef __cplusplus

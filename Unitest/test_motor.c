@@ -11,8 +11,8 @@ extern "C" {
 
 void Test_Motor(void)
 {
-    extern Motor_Data_t Motor_Data;
-    Motor_Init(&Motor_Data);
+    extern Motor_Data_t g_motor_data;
+    Motor_Init(&g_motor_data);
     while (1)
     {
         // Motor_Set_Pwm(300, 300);

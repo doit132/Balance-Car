@@ -8,12 +8,14 @@ extern "C" {
 #include "key.h"
 #include "led.h"
 #include "main.h"
+#include "soft_timer.h"
 
 /* ANCHOR - 公共函数定义 */
 
 void Test_Key_Click(void)
 {
     u8 key_num;
+    SoftTimer_Start(1, 20, SOFT_TIMER_MODE_PERIODIC, "key");
     while (1)
     {
         /* 1. 使用 while(1) 作为时基 ------------------------------------------------------ */
@@ -24,12 +26,12 @@ void Test_Key_Click(void)
         //     LED_Toggle();
         // }
 
-        // if (key_num == 2) /* 长击 */
+        // if (key_num == KEY_Event_DoubleClick) /* 长击 */
         // {
         //     LED_Flash(500, 2);
         // }
 
-        // if (key_num == 3) /* 双击 */
+        // if (key_num == KEY_Event_LongPress) /* 双击 */
         // {
         //     LED_Flash(500, 3);
         // }

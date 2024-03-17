@@ -32,7 +32,7 @@ typedef struct
 /* ANCHOR - 公共函数声明 */
 void HCSR04_Init(TIM_HandleTypeDef* htim, uint32_t Channel, Hcsr04Info_t* info);
 void HCSR04_Start(void);
-void Hcsr04_Get_Data(Hcsr04Info_t* Hcsr04Info);
+void Hcsr04_Get_Data(Hcsr04Info_t* g_hcsr04_info);
 
 /* 中断处理函数/回调函数 */
 

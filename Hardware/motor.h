@@ -11,12 +11,18 @@ extern "C" {
 #include "sys.h"
 #include "encoder.h"
 
+/* ANCHOR - 宏定义 */
+
+#define PWM_MAX   7200
+#define PWM_MIN   -7200
+#define DEAD_ZONE 280
+
 /* ANCHOR - 结构体声明 */
 
 typedef struct
 {
-    float Velocity_Left;  /* 左电机线速度 单位: mm/s */
-    float Velocity_Right; /* 右电机线速度 单位: mm/s */
+    float velocity_left;  /* 左电机线速度 单位: mm/s */
+    float velocity_right; /* 右电机线速度 单位: mm/s */
 } Motor_Data_t;           /* 输出的电机数据 */
 
 /* ANCHOR - 宏定义 */
@@ -32,7 +38,7 @@ typedef struct
 /* ANCHOR - 公共函数声明 */
 
 void Motor_Set_Pwm(int motor_left, int motor_right);
-void Motor_TurnOff(u8 motor);
+void Motor_TurnOff(void);
 void Motor_Init(Motor_Data_t* pData);
 void Motor_Get_Velocity_From_Encoder(Motor_Data_t* pMotorData, Encoder_Data_t* pEncoderData);
 #ifdef __cplusplus
