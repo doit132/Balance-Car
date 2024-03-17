@@ -1,14 +1,14 @@
 #ifndef SOFT_TIMER_H
 #define SOFT_TIMER_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* ANCHOR - 头文件包含 */
 
 #include "sys.h"
 #include "main.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* ANCHOR - 宏定义 */
 

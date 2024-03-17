@@ -1,13 +1,13 @@
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* ANCHOR - 头文件包含 */
 
 #include "test_mpu6050.h"
 #include "mpu6050.h"
 #include "delay.h"
 #include "bsp.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* ANCHOR - 全局变量定义 */
 

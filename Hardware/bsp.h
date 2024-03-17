@@ -1,10 +1,6 @@
 #ifndef BSP_H
 #define BSP_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* ANCHOR - 头文件包含 */
 
 #include "key.h"
@@ -16,6 +12,10 @@ extern "C" {
 #include "mpu6050.h"
 #include "encoder.h"
 #include "motor.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* ANCHOR - 全局变量声明 */
 

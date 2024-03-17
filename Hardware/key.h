@@ -1,13 +1,13 @@
 #ifndef KEY_H
 #define KEY_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* ANCHOR - 头文件包含 */
 
 #include "sys.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* ANCHOR - 枚举 */
 

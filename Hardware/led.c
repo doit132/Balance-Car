@@ -1,6 +1,3 @@
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /* ANCHOR - 头文件包含 */
 
@@ -8,6 +5,10 @@ extern "C" {
 
 #include "led.h"
 #include "main.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* ANCHOR - 公共函数定义 */
 

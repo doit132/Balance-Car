@@ -1,10 +1,11 @@
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /* ANCHOR - 头文件包含 */
 
 #include "font.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* ANCHOR - 全局变量定义 */
 

@@ -1,11 +1,11 @@
 #ifndef TEST_KEY_H
 #define TEST_KEY_H
 
+/* ANCHOR - 头文件包含 */
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-/* ANCHOR - 头文件包含 */
 
 /* ANCHOR - 公共函数声明 */
 

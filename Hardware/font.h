@@ -1,14 +1,14 @@
 #ifndef FONT_H
 #define FONT_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* ANCHOR - 头文件包含 */
 
 #include "main.h"
 #include "sys.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* ANCHOR - 全局变量声明 */
 

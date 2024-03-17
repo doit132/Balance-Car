@@ -36,7 +36,7 @@
 #include "bsp.h"
 #include "soft_timer.h"
 
-#include "pid.h"
+#include "task.h"
 
 /* USER CODE END Includes */
 
@@ -47,7 +47,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define DATA_MAX 20
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -61,18 +61,20 @@
 
 /* ANCHOR - 公共全局变量 */
 
-float             GyroX, GyroY, GyroZ; /* 陀螺仪数据 */
-float             AccX, AccY, AccZ;    /* 加速度计数据 */
-float             Pitch, Yaw, Roll;    /* 欧拉角 */
-u8                WayAngle;            /* 获得欧拉角的方式: 1: DMP 2: 卡尔曼滤波 3: 互补滤波 */
-PID_HandleTypeDef HPid;                /* PID 句柄 */
-u8                FlagStop;            /* 小车停止标志位 */
-float             Voltage;             /* 电池电压 */
-u8                FlagAvoid;           /* 小车避障模式标志位 */
-u8                FlagFollow;          /* 小车跟随模式标志位 */
-Hcsr04Info_t      Hcsr04Info;          /* 超声波传感器结构体, 内部有测量距离 */
-Encoder_Data_t    Encoder_Data;        /* 编码器数据 */
-Motor_Data_t      Motor_Data;          /* 电机数据 */
+u8             g_way_angle = 1;               /* 获得欧拉角的方式: 1: DMP 2: 卡尔曼滤波 3: 互补滤波 */
+float          g_balance_kp = 650 * 0.6;      /* 直立环 PD 控制器 比例控制系数 */
+float          g_balance_kd = 30 * 0.6;       /* 直立环 PD 控制器 微分控制系数 */
+float          g_velocity_kp = 220.0;         /* 速度环 PD 控制器 比例控制系数 */
+float          g_velocity_ki = 220.0 / 200.0; /* 速度环 PI 控制器 积分控制系数 */
+u8             g_flag_stop = 1;               /* 小车停止标志位 */
+float          g_voltage;                     /* 电池电压 */
+u8             g_flag_avoid;                  /* 小车避障模式标志位 */
+u8             g_flag_follow;                 /* 小车跟随模式标志位 */
+Hcsr04Info_t   g_hcsr04_info;                 /* 超声波传感器结构体, 内部有测量距离 */
+Encoder_Data_t g_encoder_data;                /* 编码器数据 */
+Motor_Data_t   g_motor_data;                  /* 电机数据 */
+u8             g_key_num;                     /* 0: 无按键, 1: 短按, 2: 长按, 3: 双击 */
+u8             g_rx_buf[DATA_MAX];            /* 串口接收缓冲区 */
 
 /* USER CODE END PV */
 
@@ -122,9 +124,17 @@ int main(void)
     MX_TIM2_Init();
     MX_TIM4_Init();
     MX_TIM1_Init();
+    MX_USART3_UART_Init();
     /* USER CODE BEGIN 2 */
     SoftTimer_Init(); /* 需要在外设初始化之前运行, 因为有的外设初始化需要软件定时器 */
     BSP_Init();
+
+    SoftTimer_Start(0, 5, SOFT_TIMER_MODE_PERIODIC, "Data Collect"); /* 5ms 一个周期 */
+    SoftTimer_Start(1, 200, SOFT_TIMER_MODE_PERIODIC, "Data Show");  /* 200ms 一个周期 */
+    SoftTimer_Start(2, 10, SOFT_TIMER_MODE_PERIODIC, "PID Control"); /* 10ms 一个周期 */
+    // HAL_UARTEx_ReceiveToIdle_IT(&huart1, g_rx_buf, DATA_MAX);
+    // HAL_UARTEx_ReceiveToIdle_IT(&huart3, g_rx_buf, DATA_MAX);
+    u64 cnt_start, cnt_end;
     /* USER CODE END 2 */
 
     /* Infinite loop */
@@ -141,11 +151,44 @@ int main(void)
         // Test_ADC();
         // while (1)
         // {
-        //     Voltage = ADC_Get_Battery_Volt();
+        //     g_voltage = ADC_Get_Battery_Volt();
         //     OLED_Show();
         //     HAL_Delay(100);
         // }
         // Test_Motor();
+
+        if (SoftTimer_Check(0))
+        {
+            // cnt_start = Systick_GetTick();
+            Task_Data_Collect();
+            Task_Encoder_Control();
+            Task_Key_Control();
+            if (g_key_num == 2)
+            {
+                LED_Flash(500, 2);
+            }
+            // cnt_end = Systick_GetTick();
+            // printf("cnt = %d\r\n", (int)(cnt_end - cnt_start));
+            // printf("gyrox = %f, gyroy = %f, gyroz = %f\r\n", g_gyro_x, g_gyro_y, g_gyro_z);
+            // printf("accx = %f, accy = %f, accz = %f\r\n", g_acc_x, g_acc_y, g_acc_z);
+            // printf("pitch = %f, roll = %f, yaw = %f\r\n", g_pitch, g_roll, g_yaw);
+        }
+        if (SoftTimer_Check(1))
+        {
+            cnt_start = Systick_GetTick();
+            Task_Data_Show();
+            cnt_end = Systick_GetTick();
+            printf("cnt = %d\r\n", (int)(cnt_end - cnt_start));
+        }
+        if (SoftTimer_Check(2))
+        {
+            // cnt_start = Systick_GetTick();
+            Task_Pid_Control();
+            // cnt_end = Systick_GetTick();
+            // printf("cnt = %d\r\n", (int)(cnt_end - cnt_start));
+        }
+        // cnt_end = Systick_GetTick();
+        // printf("cnt = %d\r\n", (int)(cnt_end - cnt_start));
 
         /* USER CODE END WHILE */
 

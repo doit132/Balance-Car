@@ -1,10 +1,6 @@
 #ifndef SYS_H
 #define SYS_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* ANCHOR - Typedef */
 
 typedef unsigned char      u8;
@@ -16,6 +12,10 @@ typedef unsigned long long u64;
 
 #include <stdio.h>
 #include <assert.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* ANCHOR - 公共函数声明 */
 

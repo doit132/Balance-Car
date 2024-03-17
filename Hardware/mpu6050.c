@@ -1,6 +1,3 @@
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /* ANCHOR - 头文件包含 */
 
@@ -10,6 +7,10 @@ extern "C" {
 #include "i2c.h"
 #include "inv_mpu.h"
 #include "inv_mpu_dmp_motion_driver.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* ANCHOR - 全局变量定义 */
 

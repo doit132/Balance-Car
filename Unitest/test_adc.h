@@ -1,13 +1,13 @@
 #ifndef TEST_ADC_H
 #define TEST_ADC_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* ANCHOR - 头文件包含 */
 
 #include "sys.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* ANCHOR - 公共函数声明 */
 

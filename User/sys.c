@@ -1,7 +1,3 @@
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* ANCHOR - 头文件包含 */
 
 #include <sys/stat.h>
@@ -10,6 +6,10 @@ extern "C" {
 #include <stdio.h>
 
 #include "sys.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 int _isatty(int fd);
 int _write(int fd, char* ptr, int len);

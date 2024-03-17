@@ -1,12 +1,12 @@
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 /* ANCHOR - 头文件包含 */
 
 #include <string.h>
 
 #include "soft_timer.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* ANCHOR - 宏定义 */
 

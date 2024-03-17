@@ -68,6 +68,10 @@ void Error_Handler(void);
 #define ECHO_GPIO_Port        GPIOB
 #define TRIG_Pin              GPIO_PIN_1
 #define TRIG_GPIO_Port        GPIOB
+#define BT_TX_Pin             GPIO_PIN_10
+#define BT_TX_GPIO_Port       GPIOB
+#define BT_RX_Pin             GPIO_PIN_11
+#define BT_RX_GPIO_Port       GPIOB
 #define BIN2_Pin              GPIO_PIN_12
 #define BIN2_GPIO_Port        GPIOB
 #define BIN1_Pin              GPIO_PIN_13

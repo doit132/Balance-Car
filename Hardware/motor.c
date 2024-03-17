@@ -1,11 +1,12 @@
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 /* ANCHOR - 头文件包含 */
 
 #include "motor.h"
 #include "tim.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* ANCHOR - 宏定义 */
 

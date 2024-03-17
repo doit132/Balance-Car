@@ -24,6 +24,9 @@
 /* USER CODE BEGIN Includes */
 #include "soft_timer.h"
 #include "delay.h"
+#include "usart.h"
+#include "bsp.h"
+#include "control.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -216,5 +219,61 @@ void TIM3_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
+
+// void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart)
+// {
+//     extern u8 g_rx_buf[20];
+//     if (huart == &huart1) /* 串口 1 接收到 PC 发来的数据 */
+//     {
+//         HAL_UART_Transmit_IT(&huart3, g_rx_buf, 20);
+//         HAL_UART_Transmit_IT(&huart1, g_rx_buf, 20);
+//         HAL_UART_Receive_IT(&huart1, g_rx_buf, 20);
+//     }
+//     if (huart == &huart3) /* 串口 3 接收到蓝牙模块发送来的数据 */
+//     {
+//         HAL_UART_Transmit_IT(&huart1, g_rx_buf, 20);
+//         HAL_UART_Receive_IT(&huart3, g_rx_buf, 20);
+//     }
+// }
+
+void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef* huart, uint16_t Size)
+{
+    extern u8 g_rx_buf[20];
+    if (huart == &huart1) /* 串口 1 接收到 PC 发来的数据 */
+    {
+        // HAL_UART_Transmit_IT(&huart3, g_rx_buf, Size);
+        HAL_UART_Transmit_IT(&huart1, g_rx_buf, Size);
+        HAL_UARTEx_ReceiveToIdle_IT(&huart1, g_rx_buf, 20);
+    }
+    if (huart == &huart3) /* 串口 3 接收到蓝牙模块发送来的数据 */
+    {
+        HAL_UART_Transmit_IT(&huart1, g_rx_buf, Size);
+        HAL_UARTEx_ReceiveToIdle_IT(&huart3, g_rx_buf, 20);
+    }
+}
+
+// void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+// {
+//     // static int Voltage_Temp, Voltage_Count, Voltage_All; // 电压测量相关变量
+//     static u8 Flag_Target; // 控制函数相关变量，提供10ms基准
+//     // int        Encoder_Left, Encoder_Right;              // 左右编码器的脉冲计数
+//     int Balance_Pwm, Velocity_Pwm, Turn_Pwm; // 平衡环PWM变量，速度环PWM变量，转向环PWM变
+//     int Motor_Left, Motor_Right;
+//     int cnt;
+//     if (GPIO_Pin == MPU6050_INT_Pin)
+//     {
+//         MPU6050_DMP_Get_Data(&g_pitch, &g_roll, &g_yaw);
+//         Balance_Pwm = Control_Balance_PD(g_pitch, 0, g_gyro_y); // 平衡PID控制
+//         Motor_Left = Balance_Pwm;
+//         Motor_Right = Balance_Pwm;
+//         // PWM值正数使小车前进，负数使小车后退
+//         Motor_Left = PWM_Limit(Motor_Left, 6900, -6900);
+//         Motor_Right = PWM_Limit(Motor_Right, 6900, -6900); // PWM限幅
+//         if (Check_Exception() == 0)                        // 如果不存在异常
+//             Motor_Set_Pwm(Motor_Left, Motor_Right);        // 赋值给PWM寄存器
+//         cnt = Systick_GetTick();
+//         printf("cnt=%d\r\n", cnt);
+//     }
+// }
 
 /* USER CODE END 1 */
